@@ -60,10 +60,10 @@
     token_sa_pipeline_secret: "{{ r_argopass.resources[0].secrets | to_json | from_json | json_query(query) }}"
   vars:
     query: >-
-      [?contains(name,'token')].name
+      [?contains(name,'pipeline')].name
 
 #- debug:
-#    msg: "{{ token_sa_pipeline_secret }}"
+#   msg: "{{ token_sa_pipeline_secret }}"
 
 - name: Get token in the secret for the sa pipeline and decode
   kubernetes.core.k8s_info:
@@ -78,7 +78,7 @@
 
 - name: define the token secret decoded
   set_fact:
-    pipeline_token: "{{ r_token_sa_secret.resources[0].data.token | b64decode }}"
+    pipeline_token: "{{ r_token_sa_secret.resources[0].metadata.annotations[\"openshift.io/token-secret.value\"] }}"
 
 - name: Creating ACS Integration with the Openshift Internal Registry
   uri:

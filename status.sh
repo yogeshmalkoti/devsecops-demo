@@ -5,7 +5,7 @@ printf "\n"
 
 printf "\n## Nexus Server - Username/Password: admin/admin123 ##\n"
 NEXUS=$(oc get route -n cicd nexus -o jsonpath='{.spec.host}')
-printf "https://$NEXUS"
+printf "http://$NEXUS"
 printf "\n"
 
 printf "\n## Sonarqube Server - Username/Password: admin/admin ##\n"

@@ -63,6 +63,10 @@ spec:
       command:
         - /bin/sh
         - '-c'
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP        
       image: >-
         registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8@sha256:562dbdac04ae9260e21d457585b3251fd8cc5310966f8fc544fb77dc544c92f8
       name: gen-env-file
@@ -82,6 +86,10 @@ spec:
         - /gen-source/Dockerfile.gen
         - '--environment-file'
         - /env-params/env-file
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP        
       image: >-
         registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8@sha256:562dbdac04ae9260e21d457585b3251fd8cc5310966f8fc544fb77dc544c92f8
       name: generate
@@ -105,6 +113,10 @@ spec:
         - '-t'
         - $(params.IMAGE_NAME):latest
         - .
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP        
       image: >-
         registry.redhat.io/rhel8/buildah@sha256:180c4d9849b6ab0e5465d30d4f3a77765cf0d852ca1cb1efb59d6e8c9f90d467
       name: build
@@ -124,6 +136,10 @@ spec:
         - $(workspaces.source.path)/image-digest
         - $(params.IMAGE_NAME):$(params.IMAGE_TAG)
         - 'docker://$(params.IMAGE_NAME):$(params.IMAGE_TAG)'
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP        
       image: registry.redhat.io/rhel8/buildah@sha256:180c4d9849b6ab0e5465d30d4f3a77765cf0d852ca1cb1efb59d6e8c9f90d467
       name: push-tag
       resources: {}
@@ -139,6 +155,10 @@ spec:
         - $(workspaces.source.path)/image-digest
         - $(params.IMAGE_NAME):$(params.IMAGE_TAG)
         - 'docker://$(params.IMAGE_NAME):latest'
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP        
       image: registry.redhat.io/rhel8/buildah@sha256:180c4d9849b6ab0e5465d30d4f3a77765cf0d852ca1cb1efb59d6e8c9f90d467
       name: push-latest
       resources: {}

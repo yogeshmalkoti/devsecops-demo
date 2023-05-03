@@ -54,6 +54,10 @@ spec:
       name: source
     - description: The workspace consisting of the custom maven settings provided by the user.
       name: maven-settings
+  stepTemplate:
+    env:
+      - name: HOME
+        value: /tekton/home      
   steps:
     - image: 'registry.access.redhat.com/ubi8/ubi-minimal:latest'
       name: mvn-settings
